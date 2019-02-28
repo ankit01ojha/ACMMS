@@ -1,0 +1,38 @@
+<md-dialogue style="width: 500px">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add new item</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="Pictures/img/baseline-close-24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialogue-content>
+            <div class="md-dialog-content">
+                <md-content class="md-no-momentum">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Item Name</label>
+                        <md-icon style="color: dodgerblue" md-svg-src="Pictures/img/outline-local_dining-24px.svg" class="name"></md-icon>
+                        <input ng-model="newItem" type="text">
+                    </md-input-container>
+
+                    <md-input-container md-no-float class="md-block">
+                        <md-icon style="color: greenyellow" md-svg-src="Pictures/img/baseline-calendar_view_day-24px.svg"></md-icon>
+                        <md-select ng-model="type">
+                            <md-optgroup>
+                                <md-option ng-repeat="item in itemType" ng-value="item">{{item}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </md-content>
+            </div>
+        </md-dialogue-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary"ng-click="">AddItem</md-button>
+            <md-button ng-click="cancel()">Cancel</md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialogue>
