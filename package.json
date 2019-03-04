@@ -1,44 +1,50 @@
 {
-  "name": "angular-seed",
-  "private": true,
-  "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "dependencies": {
-    "@uirouter/angularjs": "^1.0.22",
-    "angular": "^1.7.5",
-    "angular-loader": "^1.7.5",
-    "angular-material": "^1.1.12",
-    "angular-route": "^1.7.5",
-    "html5-boilerplate": "0.0.1"
+  "name": "ACMMS",
+  "version": "1.0.0",
+  "description": "Amrita Canteen Mess Management System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "angular-mocks": "^1.7.5",
-    "cpx": "^1.5.0",
-    "http-server": "^0.11.1",
-    "jasmine-core": "^3.3.0",
-    "karma": "^3.1.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-firefox-launcher": "^1.1.0",
-    "karma-jasmine": "^1.1.2",
-    "protractor": "^5.4.1"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "frontend-dependencies": "^1.1.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.8.0"
+  },
+  "frontendDependencies": {
+    "target": "public/lib/",
+    "packages": {
+      "@uirouter/angularjs": {
+        "version": "^1.0.22"
+      },
+      "angular": {
+        "version": "^1.7.5"
+      },
+      "angular-loader": {
+        "version": "^1.7.5"
+      },
+      "angular-material": {
+        "version": "^1.1.12"
+      },
+      "angular-route": {
+        "version": "^1.7.5"
+      },
+      "html5-boilerplate": {
+        "version": "0.0.1"
+      }
+    }
   },
   "scripts": {
-    "postinstall": "npm run copy-libs",
-    "update-deps": "npm update",
-    "postupdate-deps": "npm run copy-libs",
-    "copy-libs": "cpx \"node_modules/{angular,angular-*,html5-boilerplate/dist}/**/*\" app/lib -C",
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1 ./app",
-    "pretest": "npm install",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "npm test -- --single-run",
-    "preupdate-webdriver": "npm install",
-    "//": "Do not install the Firefox driver to work around https://github.com/angular/webdriver-manager/issues/303.",
-    "update-webdriver": "webdriver-manager update --gecko false",
-    "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor e2e-tests/protractor.conf.js",
-    "update-index-async": "node --eval \"var fs=require('fs'),indexFile='app/index-async.html',loaderFile='app/lib/angular-loader/angular-loader.min.js',loaderText=fs.readFileSync(loaderFile,'utf-8').split(/sourceMappingURL=angular-loader.min.js.map/).join('sourceMappingURL=lib/angular-loader/angular-loader.min.js.map'),indexText=fs.readFileSync(indexFile,'utf-8').split(/\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/).join('//@@NG_LOADER_START@@\\n'+loaderText+'    //@@NG_LOADER_END@@');fs.writeFileSync(indexFile,indexText);\""
+    "postinstall": "node ./node_modules/frontend-dependencies/index.js",
+    "start":"node index.js"
   }
 }
