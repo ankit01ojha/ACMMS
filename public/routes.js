@@ -17,7 +17,7 @@ angular.module('myApp')
                controller: 'adminCtrl'
             })
             .otherwise({
-                redirect:'/'
+                redirectTo:'/'
             });
     }]);
 })();
