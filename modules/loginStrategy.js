@@ -18,7 +18,7 @@ let Strategy = new localStrategy(function(username,password,done){
             }
             if(resp){
                 
-                return done(null,data[0]);
+                return done(null,{id:data[0].user_id,type:data[0].user_type,name:data[0].user_name});
             }
             return done(null,false,{message:"Auth failure"});
         });
@@ -26,7 +26,7 @@ let Strategy = new localStrategy(function(username,password,done){
 });
 
 let serializer = function(user, done) {
-    done(null, user.user_id);
+    done(null, user.id);
 }
 
 
@@ -34,7 +34,7 @@ let deserializer = function(user, done) {
     let db = new dbConnection(dbURL);
     let result = db.getUser(user)
     result.then(function(data){
-        done(null,{id:data[0].user_id,type:data[0].user_type});
+        done(null,{id:data[0].user_id,type:data[0].user_type,name:data[0].user_name});
     });
 }
 

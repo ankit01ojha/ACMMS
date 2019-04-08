@@ -13,8 +13,13 @@ angular.module('myApp')
                 controller: 'App_Ctrl'
             })
             .when('/admin', {
-               templateUrl: 'Admin/admin.html',
-               controller: 'adminCtrl'
+               templateUrl: 'admin/admin.html',
+               controller: 'adminCtrl',
+               resolve:{
+                   auth:['authService',function($auth){
+                       return $auth.checkOwner();
+                   }]
+               }
             })
             .otherwise({
                 redirectTo:'/'

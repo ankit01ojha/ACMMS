@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('appCtrl', function($scope){
-
-    });
+    .controller('appCtrl',['$rootScope','$scope','authService',function($rootScope,$scope,authService){
+        authService.isLoggedIn();
+    }]);
 
