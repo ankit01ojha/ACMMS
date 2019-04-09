@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('adminCtrl', function($scope, $mdDialog, $mdToast, $log){
+    .controller('adminCtrl',['$scope','$mdDialog','$mdToast','$log', function($scope, $mdDialog, $mdToast, $log){
         $scope.breakfast=[
             "Idli",
             "Sambar",
@@ -50,7 +50,7 @@ angular.module('myApp')
         $scope.previewItems = function(ev){
             $mdDialog.show({
                 controller: newPreviewCtrl,
-                templateUrl: 'Admin/Preview/preview.html',
+                templateUrl: 'admin/Preview/preview.html',
                 targetEvent: ev,
                 clickOutsideToClose:true
             });
@@ -148,5 +148,6 @@ angular.module('myApp')
             };
 
         }
-    });
+    
+    }]);
 

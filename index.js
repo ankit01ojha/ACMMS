@@ -16,14 +16,15 @@ app.set('view engine','ejs');
 //Routes
 const api = require('./routes/api');
 
-// Middlewares
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(session({   //Express session
     secret: secretKey,
     saveUninitialized: true,
     resave: true
 }));
+// Middlewares
+app.use(passport.initialize());
+app.use(passport.session());
+
   
 app.use(bodyParser.urlencoded({'extended':'true'})); 
 app.use(bodyParser.json());  

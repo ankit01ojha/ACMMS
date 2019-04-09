@@ -2,10 +2,13 @@
     'use strict';
 
     angular.module('myApp')
-        .config(function ($mdThemingProvider) {
+        .config(['$mdThemingProvider','$httpProvider',function ($mdThemingProvider,$httpProvider) {
             $mdThemingProvider.theme('default')
                 .primaryPalette('pink')
                 .accentPalette('orange');
             
-        });
+            $httpProvider.defaults.withCredentials = true;
+
+            
+        }]);
 })();
