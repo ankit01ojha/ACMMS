@@ -19,14 +19,14 @@
                         </md-input-container>
 
                         <md-input-container md-no-float class="md-block">
-                            <md-icon style="color: greenyellow" md-svg-src="Pictures/img/baseline-calendar_view_day-24px.svg"></md-icon>
+                            <md-icon><i class="material-icons" style="color:green;">vpn_key</i></md-icon>
                             <input ng-model="password" type="password" placeholder="Password">
                         </md-input-container>
                     </md-content>
             </div>
         </md-dialogue-content>
         <md-dialog-actions layout="row">
-            <md-button class="md-primary"ng-click="login()">Login</md-button>
+            <md-button class="md-primary" type="submit" ng-click="login()">Login</md-button>
             <md-button ng-click="cancel()">Cancel</md-button>
 
         </md-dialog-actions>

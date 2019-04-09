@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('myApp')
-        .controller('App_Ctrl',['$rootScope','$scope','$mdDialog','$mdToast','$interval','$log','authService', function ($rootScope,$scope,$mdDialog,$mdToast,$interval,$log,authService) {
+        .controller('App_Ctrl',['$rootScope','$scope','$mdDialog','$mdToast','$interval','$log','authService','$location', function ($rootScope,$scope,$mdDialog,$mdToast,$interval,$log,authService,$location) {
             $scope.showLogin = function(ev){
                 $mdDialog.show({
                     controller: loginCtrl,
@@ -26,6 +26,9 @@
                         $scope.authenticationFailed = false;
                         $rootScope.user = data.user;
                         $rootScope.loggedIn = true;
+                        if(data.user.type == 'owner'){
+                            $location.path('/admin');
+                        }
                         $mdDialog.cancel();
                     });
 

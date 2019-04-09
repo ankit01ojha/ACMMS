@@ -7,7 +7,17 @@
             <md-button>
                 <md-button class="md-raised md-warn" ng-click="previewItems()">Preview</md-button>
             </md-button>
-            <span ng-if="loggedIn"><md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}</span>
+            <md-menu ng-if="loggedIn">
+                    <md-button aria-label="Open demo menu"  ng-click="$mdMenu.open($event)">
+                            <md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}
+                    </md-button>
+                    <md-menu-content width="4" >
+                            <md-menu-item ng-click="logout()" style="cursor:pointer">
+                                    <span><i class="material-icons">exit_to_app</i>Logout</span>
+                            </md-menu-item>
+                    </md-menu-content>
+            </md-menu>
+           
         </div>
     </md-toolbar>
     <md-divider></md-divider>

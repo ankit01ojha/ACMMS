@@ -1,11 +1,14 @@
 var app = angular.module('myApp');
+
 app.service('authService',['$rootScope','$http','$q','$location',function(scope,$http,$q,$location){
     this.authenticate = function(username,password){
+        scope.blockUI = true;
         $http.post('/api/login',{username:username,password:password}).then(function(result){
-
+            scope.blockUI = false;
             scope.$broadcast("UserAuthenticationSuccess",result.data);
         
         },function(result){
+            scope.blockUI = false;
             if(result.status == 500){
                 scope.$broadcast("AuthRequestFailure");
             }
@@ -83,20 +86,33 @@ app.service('authService',['$rootScope','$http','$q','$location',function(scope,
 app.service('resourceFactory',['$rootScope','$http',function(scope,$http){
     
     /* 
-        reosurceFactory 
+        resourceFactory 
         methods
     */
-    this.getItems = function(items){
-        
+    this.getItems = function(){
+        scope.blockUI = true;
+        return $http({
+            method:'get',
+            url:'/api/items'
+        });
+    }
+
+    this.createItem = function(data){
+        scope.blockUI = true;
+        return $http({
+            method:'post',
+            url:'/api/createitem',
+            data:data
+        });
+    }
+
+    this.registerOwner = function(data){
+        scope.blockUI = true;
+        return $http({
+            method:'post',
+            url:'/api/ownerRegistration',
+            data:data
+        });
     }
     
-    // this.getResident = function(residentId){
-    //     scope.blockUI = true;
-    //     return $http({
-    //         method:'get',
-    //         url: '/api/viewresident/'+residentId,
-    //         headers:headers
-    //     });
-    // }
-
 }]);
