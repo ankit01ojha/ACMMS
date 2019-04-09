@@ -43,6 +43,18 @@ angular.module('myApp')
 
 
         $scope.added=false;
+        $scope.preview = [];
+        $scope.isOpen = false;
+        $scope.adding = ['A'];
+
+        $scope.previewItems = function(ev){
+            $mdDialog.show({
+                controller: newPreviewCtrl,
+                templateUrl: 'Admin/Preview/preview.html',
+                targetEvent: ev,
+                clickOutsideToClose:true
+            });
+        };
 
         $scope.addItem = function(ev){
             $mdDialog.show({
@@ -102,15 +114,23 @@ angular.module('myApp')
 
 
 
-        $scope.showToast = function () {
+
+        $scope.showToast = function (item) {
           /*$scope.pinTo = $scope.getToastPosition();*/
-            console.log($scope.added);
+            $scope.preview.push(item);
+
+            for(var i=0;i<$scope.preview.length-1;i++){
+                if(item=== $scope.preview[i]){
+                    $scope.preview.splice($scope.preview.length-1,1);
+                }
+            }
+            console.log($scope.preview);
             if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('Added')
                         .position('top, right')
-                        .hideDelay(3000))
+                        .hideDelay(1000))
                     .then(function () {
                             $log.log('Toast dismissed');
                         }
@@ -120,5 +140,13 @@ angular.module('myApp')
             }
 
         };
+        function newPreviewCtrl($scope, $mdDialog){
+            $scope.x = ['A'];
+            console.log($scope.x);
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+
+        }
     });
 

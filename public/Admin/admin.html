@@ -4,6 +4,9 @@
         <div class="md-toolbar-tools">
             <img style="height: 50px" ng-src="Pictures/amrita_logo.png">
             <h2 style="padding-left: 60px"flex md-truncate>Amrita Canteen and Mess Management System(ACMMS)</h2>
+            <md-button>
+                <md-button class="md-raised md-warn" ng-click="previewItems()">Preview</md-button>
+            </md-button>
         </div>
     </md-toolbar>
     <md-divider></md-divider>
@@ -15,7 +18,7 @@
                     <div  class='md-padding' layout="row" layout-wrap>
                         <md-card ng-repeat="names in breakfast" style="width: 700px; padding-left: 20px">
                             <md-card-title-text style="padding-left: 20px;">
-                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="showToast()" >
+                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="showToast(names)" >
                                     <h2 style="padding-left: 20px" class="md-headline">{{names}}</h2>
                                 </md-checkbox>
 
@@ -113,6 +116,25 @@
         <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="add" style="position: fixed ;" ng-click="addItem($event)">
             <md-icon md-svg-src="Pictures/img/outline-add-24px.svg"></md-icon>
         </md-button>
+        <!--<div class="lock-size" layout="row" layout-align="end start">
+            <md-fab-speed-dial md-open=false md-direction="left"
+                               ng-class='md-fling'>
+                <md-fab-trigger>
+                    <md-button aria-label="menu"  class="md-fab md-warn">
+                        <md-icon md-svg-src="Pictures/img/baseline-menu-24px.svg"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+
+                <md-fab-actions>
+                    <md-button aria-label="Add" ng-click="addItem($event)" class="md-fab md-raised md-mini">
+                        <md-icon md-svg-src="Pictures/img/outline-add-24px.svg" aria-label="Twitter"></md-icon>
+                    </md-button>
+                    <md-button aria-label="Preview" class="md-fab md-raised md-mini">
+                        <md-icon md-svg-src="Pictures/img/baseline-visibility-24px.svg" aria-label="Facebook"></md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>-->
     </md-content>
 
 
