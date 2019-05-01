@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('myApp')
-        .controller('bioCanteenCtrl', function ($scope) {
+        .controller('engCanteenCtrl', function ($scope) {
 
         });
 })();

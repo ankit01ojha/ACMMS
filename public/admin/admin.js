@@ -3,33 +3,19 @@
 angular.module('myApp')
     .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory', function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory) {
 
-        /* 
-            Sample code for getting all items
-            and using resourceFactory service
-        */
-        let promises = {
-            items: resourceFactory.getItems()
-        }
-
-        $q.all(promises).then(function (values) {
-            $rootScope.blockUI = false;
-            $scope.items = values.items.data.data;
-
-        });
-
-        $scope.breakfast = [
-            "Idli",
-            "Sambar",
-            "White-Chutney",
-            "Orange-Chutney",
-            "Green1-Chutney",
-            "Green2-Chutney",
-            "Poha jaisa dikhne wala kuch",
-            "Namkin sewaii",
-            "Tatti Dosa without masala",
-            "Tatti Dosa with masala",
-            "Bread without butter",
-            "Bread with butter"
+        $scope.breakfast=[
+            {name: "Idli", added: false},
+            {name: "Sambar",added: false},
+            {name: "White-Chutney",added: false},
+            {name: "Orange-Chutney",added: false},
+            {name: "Green1-Chutney",added: false},
+            {name: "Green2-Chutney",added: false},
+            {name: "Poha jaisa dikhne wala kuch",added: false},
+            {name: "Namkin sewaii",added: false},
+            {name: "Tatti Dosa without masala",added: false},
+            {name: "Tatti Dosa with masala",added: false},
+            {name: "Bread without butter",added: false},
+            {name: "Bread with butter", added: false}
         ];
 
         $scope.lunch = [
@@ -47,7 +33,7 @@ angular.module('myApp')
             "Mirchi ka bhajii"
         ];
 
-        $scope.dinner = [
+        $scope.dinner =[
             "Paneer",
             "Chappati",
             "White Rice",
@@ -57,26 +43,15 @@ angular.module('myApp')
         ];
 
 
-        $scope.added = false;
-        $scope.preview = [];
-        $scope.isOpen = false;
-        $scope.adding = ['A'];
+        $scope.added=false;
+        $scope.preview=[];
 
-        $scope.previewItems = function (ev) {
-            $mdDialog.show({
-                controller: newPreviewCtrl,
-                templateUrl: 'admin/Preview/preview.html',
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        };
-
-        $scope.addItem = function (ev) {
+        $scope.addItem = function(ev){
             $mdDialog.show({
                 controller: newItemCtrl,
                 templateUrl: 'Admin/newItem/newItem.html',
                 targetEvent: ev,
-                clickOutsideToClose: true
+                clickOutsideToClose:true
             });
         };
         $scope.editItem = function (ev) {
@@ -88,9 +63,9 @@ angular.module('myApp')
                 .required(true)
                 .ok('Rename')
                 .cancel('cancel');
-            $mdDialog.show($scope.confirm).then(function (result) {
+            $mdDialog.show($scope.confirm).then(function(result){
                 $scope.status = "You have renamed the item to" + result + ".";
-            }, function () {
+            }, function(){
                 $scope.status = "You didn\'t rename the item.";
             });
         };
@@ -103,91 +78,88 @@ angular.module('myApp')
                 .ok('Delete')
                 .cancel('Cancel');
 
-            $mdDialog.show($scope.confirm).then(function () {
+            $mdDialog.show($scope.confirm).then(function(){
                 $scope.status = 'You deleted this item';
-            }, function () {
+            },function(){
                 $scope.status = 'Cancel';
             });
         };
 
 
 
-        function newItemCtrl($scope, $mdDialog) {
+        function newItemCtrl($scope, $mdDialog){
             $scope.itemType = [
-                'breakfast',
-                'lunch',
-                'snacks',
-                'dinner'
+                'Breakfast',
+                'Lunch',
+                'Snacks',
+                'Dinner'
             ];
 
-            $scope.cancel = function () {
+            $scope.cancel = function() {
                 $mdDialog.cancel();
             };
 
         }
 
-
-
-
-
-        $scope.showToast = function (item) {
-            /*$scope.pinTo = $scope.getToastPosition();*/
+        $scope.addedToPreview = function(item){
             console.log(item);
-            $scope.preview.push(item);
-            for (var i = 0; i < $scope.preview.length - 1; i++) {
-                if (item === $scope.preview[i]) {
-                    $scope.preview.splice($scope.preview.length - 1, 1);
+
+            if(item.added == true) {
+                for (var i = 0; i < $scope.preview.length; i++) {
+                    if (item.name === $scope.preview[i]) {
+                        item.added = false;
+                        $scope.preview.splice(i, 1);
+                        $scope.showRemovedToast(item.name);
+                        break;
+                    }
                 }
+            }
+            else{
+                $scope.preview.push(item.name);
+                item.added = true;
+                $scope.showAddedToast(item.name);
             }
             console.log($scope.preview);
+        };
 
-            var flag = 0;
-            for (var i = 0; i < $scope.preview.length - 1; i++) {
-                if (item === $scope.preview[i]) {
-                    flag = 1;
-                    console.log(flag);
-                }
-            }
-            if (flag == 1) {
+
+
+
+        $scope.showAddedToast = function (name) {
+            /*$scope.pinTo = $scope.getToastPosition();*/
+            console.log($scope.added);
+            if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('removed')
+                        .textContent('Added ' + name)
                         .position('top, right')
                         .hideDelay(1000))
                     .then(function () {
-                        $log.log('Toast dismissed');
-                    }
-                    ).catch(function () {
-                        $log.log('Toast failed or was forced closed due to another toast');
-                    });
-                var j = 2;
-                while (j < 2) {
-                    for (var i = 0; i < $scope.preview.length - 1; i++) {
-                        if (item === $scope.preview[i]) {
-                            $scope.preview.splice($scope.preview.length - 1, 1);
+                            $log.log('Toast dismissed');
                         }
-                    }
-                    j = j - 1;
-                }
-
+                    ).catch(function () {
+                    $log.log('Toast failed or was forced closed due to another toast');
+                });
             }
-            else {
-                $scope.preview.push(item);
+
+        };
+
+        $scope.showRemovedToast = function (name) {
+            /*$scope.pinTo = $scope.getToastPosition();*/
+            console.log($scope.added);
+            if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('Added')
+                        .textContent('Removed ' + name)
                         .position('top, right')
                         .hideDelay(1000))
                     .then(function () {
-                        $log.log('Toast dismissed');
-                    }
+                            $log.log('Toast dismissed');
+                        }
                     ).catch(function () {
-                        $log.log('Toast failed or was forced closed due to another toast');
-                    });
-
+                    $log.log('Toast failed or was forced closed due to another toast');
+                });
             }
-
-
 
         };
 

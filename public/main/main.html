@@ -20,7 +20,7 @@
 
 <md-container style="padding-top: 30px" class="md-padding" layout-xs="column" layout="row">
 
-    <div flex-xs flex-gt-xs="50" ng-click="bCanteen()" layout="column">
+    <div flex-xs flex-gt-xs="50" ng-click="show_BioCanteen()" layout="column">
         <md-whiteframe class="md-whiteframe-23dp">
             <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
                 <img ng-src="Pictures/Child-messy-eating-300x212.jpg" class="md-card-image" alt="Washed Out">
@@ -32,31 +32,33 @@
             </md-card>
         </md-whiteframe>
     </div>
-    <div flex-xs flex-gt-xs="50" style="padding: 10px;" layout="column">
-        <md-whiteframe class="md-whiteframe-20dp">
-            <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                <img ng-src="Pictures/mess.jpg" class="md-card-image" alt="Washed Out">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Amrita Mess</span>
-                    </md-card-title-text>
 
-                </md-card-title>
-            </md-card>
-        </md-whiteframe>
-    </div>
-    <div flex-xs flex-gt-xs="50" layout="column">
-        <md-whiteframe class="md-whiteframe-23dp">
-            <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                <img ng-src="Pictures/Child-messy-eating-300x212.jpg" class="md-card-image" alt="Washed Out">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Amrita Engineering Canteen</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                    </md-card-title-media>
-                </md-card-title>
-            </md-card>
-        </md-whiteframe>
-    </div>
-</md-container>
+        <div flex-xs flex-gt-xs="50" style="padding: 10px;" layout="column" ng-click="show_mess()">
+            <md-whiteframe class="md-whiteframe-20dp">
+                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                    <img ng-src="Pictures/mess.jpg" class="md-card-image" alt="Washed Out">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Amrita Mess</span>
+                        </md-card-title-text>
+
+                    </md-card-title>
+                </md-card>
+            </md-whiteframe>
+        </div>
+        <div flex-xs flex-gt-xs="50"  layout="column" ng-click="show_EngCanteen()">
+            <md-whiteframe  class="md-whiteframe-23dp">
+                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                    <img ng-src="Pictures/Child-messy-eating-300x212.jpg" class="md-card-image" alt="Washed Out">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Amrita Engineering Canteen</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                        </md-card-title-media>
+                    </md-card-title>
+                </md-card>
+            </md-whiteframe>
+        </div>
+    </md-container>
+

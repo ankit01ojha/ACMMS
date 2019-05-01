@@ -27,10 +27,11 @@
                 <md-content class="md-padding">
 
                     <div  class='md-padding' layout="row" layout-wrap>
-                        <md-card ng-repeat="names in breakfast" style="width: 700px; padding-left: 20px">
+                        <md-card ng-repeat="item in breakfast" style="width: 700px; padding-left: 20px">
                             <md-card-title-text style="padding-left: 20px;">
-                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="showToast(names)" >
-                                    <h2 style="padding-left: 20px" class="md-headline">{{names}}</h2>
+
+                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="addedToPreview(item)" >
+                                    <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
                                 </md-checkbox>
 
                             </md-card-title-text>

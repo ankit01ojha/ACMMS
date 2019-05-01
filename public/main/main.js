@@ -2,7 +2,9 @@
     'use strict';
 
     angular.module('myApp')
+
         .controller('App_Ctrl',['$rootScope','$scope','$mdDialog','$mdToast','$interval','$log','authService','$location', function ($rootScope,$scope,$mdDialog,$mdToast,$interval,$log,authService,$location) {
+
             $scope.showLogin = function(ev){
                 $mdDialog.show({
                     controller: loginCtrl,
@@ -60,5 +62,20 @@
                     });
                 };
             }
+
+
+            $scope.show_BioCanteen = function(){
+                $location.path('/bioCanteen');
+            };
+
+            $scope.show_mess = function(){
+                $location.path('/mess');
+            };
+
+            $scope.show_EngCanteen = function(){
+                $location.path('/engCanteen');
+            };
+
         }]);
+
 })();
