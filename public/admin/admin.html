@@ -7,7 +7,17 @@
             <md-button>
                 <md-button class="md-raised md-warn" ng-click="previewItems()">Preview</md-button>
             </md-button>
-            <span ng-if="loggedIn"><md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}</span>
+            <md-menu ng-if="loggedIn">
+                    <md-button aria-label="Open demo menu"  ng-click="$mdMenu.open($event)">
+                            <md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}
+                    </md-button>
+                    <md-menu-content width="4" >
+                            <md-menu-item ng-click="logout()" style="cursor:pointer">
+                                    <span><i class="material-icons">exit_to_app</i>Logout</span>
+                            </md-menu-item>
+                    </md-menu-content>
+            </md-menu>
+           
         </div>
     </md-toolbar>
     <md-divider></md-divider>
@@ -17,10 +27,11 @@
                 <md-content class="md-padding">
 
                     <div  class='md-padding' layout="row" layout-wrap>
-                        <md-card ng-repeat="names in breakfast" style="width: 700px; padding-left: 20px">
+                        <md-card ng-repeat="item in breakfast" style="width: 700px; padding-left: 20px">
                             <md-card-title-text style="padding-left: 20px;">
-                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="showToast(names)" >
-                                    <h2 style="padding-left: 20px" class="md-headline">{{names}}</h2>
+
+                                <md-checkbox ng-model="added" aria-label="Checkbox 1" ng-click="addedToPreview(item)" >
+                                    <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
                                 </md-checkbox>
 
                             </md-card-title-text>

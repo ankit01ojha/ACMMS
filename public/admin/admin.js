@@ -1,20 +1,21 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('adminCtrl',['$scope','$mdDialog','$mdToast','$log', function($scope, $mdDialog, $mdToast, $log){
+    .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory', function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory) {
+
         $scope.breakfast=[
-            "Idli",
-            "Sambar",
-            "White-Chutney",
-            "Orange-Chutney",
-            "Green1-Chutney",
-            "Green2-Chutney",
-            "Poha jaisa dikhne wala kuch",
-            "Namkin sewaii",
-            "Tatti Dosa without masala",
-            "Tatti Dosa with masala",
-            "Bread without butter",
-            "Bread with butter"
+            {name: "Idli", added: false},
+            {name: "Sambar",added: false},
+            {name: "White-Chutney",added: false},
+            {name: "Orange-Chutney",added: false},
+            {name: "Green1-Chutney",added: false},
+            {name: "Green2-Chutney",added: false},
+            {name: "Poha jaisa dikhne wala kuch",added: false},
+            {name: "Namkin sewaii",added: false},
+            {name: "Tatti Dosa without masala",added: false},
+            {name: "Tatti Dosa with masala",added: false},
+            {name: "Bread without butter",added: false},
+            {name: "Bread with butter", added: false}
         ];
 
         $scope.lunch = [
@@ -43,18 +44,7 @@ angular.module('myApp')
 
 
         $scope.added=false;
-        $scope.preview = [];
-        $scope.isOpen = false;
-        $scope.adding = ['A'];
-
-        $scope.previewItems = function(ev){
-            $mdDialog.show({
-                controller: newPreviewCtrl,
-                templateUrl: 'admin/Preview/preview.html',
-                targetEvent: ev,
-                clickOutsideToClose:true
-            });
-        };
+        $scope.preview=[];
 
         $scope.addItem = function(ev){
             $mdDialog.show({
@@ -81,29 +71,29 @@ angular.module('myApp')
         };
 
         $scope.deleteItem = function (ev) {
-          $scope.confirm = $mdDialog.confirm()
-              .title('Delete this item ?')
-              .ariaLabel('delete item')
-              .targetEvent(ev)
-              .ok('Delete')
-              .cancel('Cancel');
+            $scope.confirm = $mdDialog.confirm()
+                .title('Delete this item ?')
+                .ariaLabel('delete item')
+                .targetEvent(ev)
+                .ok('Delete')
+                .cancel('Cancel');
 
-          $mdDialog.show($scope.confirm).then(function(){
-              $scope.status = 'You deleted this item';
-          },function(){
-              $scope.status = 'Cancel';
-              });
+            $mdDialog.show($scope.confirm).then(function(){
+                $scope.status = 'You deleted this item';
+            },function(){
+                $scope.status = 'Cancel';
+            });
         };
 
 
 
         function newItemCtrl($scope, $mdDialog){
-                $scope.itemType = [
-                    'Breakfast',
-                    'Lunch',
-                    'Snacks',
-                    'Dinner'
-                ];
+            $scope.itemType = [
+                'Breakfast',
+                'Lunch',
+                'Snacks',
+                'Dinner'
+            ];
 
             $scope.cancel = function() {
                 $mdDialog.cancel();
@@ -111,24 +101,37 @@ angular.module('myApp')
 
         }
 
+        $scope.addedToPreview = function(item){
+            console.log(item);
 
-
-
-
-        $scope.showToast = function (item) {
-          /*$scope.pinTo = $scope.getToastPosition();*/
-            $scope.preview.push(item);
-
-            for(var i=0;i<$scope.preview.length-1;i++){
-                if(item=== $scope.preview[i]){
-                    $scope.preview.splice($scope.preview.length-1,1);
+            if(item.added == true) {
+                for (var i = 0; i < $scope.preview.length; i++) {
+                    if (item.name === $scope.preview[i]) {
+                        item.added = false;
+                        $scope.preview.splice(i, 1);
+                        $scope.showRemovedToast(item.name);
+                        break;
+                    }
                 }
             }
+            else{
+                $scope.preview.push(item.name);
+                item.added = true;
+                $scope.showAddedToast(item.name);
+            }
             console.log($scope.preview);
+        };
+
+
+
+
+        $scope.showAddedToast = function (name) {
+            /*$scope.pinTo = $scope.getToastPosition();*/
+            console.log($scope.added);
             if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('Added')
+                        .textContent('Added ' + name)
                         .position('top, right')
                         .hideDelay(1000))
                     .then(function () {
@@ -140,14 +143,25 @@ angular.module('myApp')
             }
 
         };
-        function newPreviewCtrl($scope, $mdDialog){
-            $scope.x = ['A'];
-            console.log($scope.x);
-            $scope.cancel = function() {
-                $mdDialog.cancel();
-            };
 
-        }
-    
+        $scope.showRemovedToast = function (name) {
+            /*$scope.pinTo = $scope.getToastPosition();*/
+            console.log($scope.added);
+            if($scope.added==false){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Removed ' + name)
+                        .position('top, right')
+                        .hideDelay(1000))
+                    .then(function () {
+                            $log.log('Toast dismissed');
+                        }
+                    ).catch(function () {
+                    $log.log('Toast failed or was forced closed due to another toast');
+                });
+            }
+
+        };
+
     }]);
 

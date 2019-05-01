@@ -21,6 +21,18 @@ angular.module('myApp')
                    }]
                }
             })
+            .when('/bioCanteen',{
+                templateUrl: 'BioCanteen/BioCanteen.html',
+                controller: 'bioCanteenCtrl'
+            })
+            .when('/mess',{
+                templateUrl: 'Mess/mess.html',
+                controller: 'messCtrl'
+            })
+            .when('/engCanteen',{
+                templateUrl: 'EngCanteen/engCanteen.html',
+                controller: 'engCanteenCtrl'
+            })
             .otherwise({
                 redirectTo:'/'
             });
