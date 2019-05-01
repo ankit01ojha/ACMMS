@@ -1,59 +1,80 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory', function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory) {
+    .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory',  function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory) {
 
-        $scope.breakfast=[
-            {name: "Idli", added: false},
-            {name: "Sambar",added: false},
-            {name: "White-Chutney",added: false},
-            {name: "Orange-Chutney",added: false},
-            {name: "Green1-Chutney",added: false},
-            {name: "Green2-Chutney",added: false},
-            {name: "Poha jaisa dikhne wala kuch",added: false},
-            {name: "Namkin sewaii",added: false},
-            {name: "Tatti Dosa without masala",added: false},
-            {name: "Tatti Dosa with masala",added: false},
-            {name: "Bread without butter",added: false},
-            {name: "Bread with butter", added: false}
+        $scope.food=[
+            {id: "1", name: "Idli", added: false, type: "Breakfast"},
+            {id: "2", name: "Sambar",added: false, type: "Breakfast"},
+            {id: "3", name: "White-Chutney",added: false, type: "Breakfast"},
+            {id: "4", name: "Orange-Chutney",added: false, type: "Breakfast"},
+            {id: "5", name: "Green1-Chutney",added: false, type: "Breakfast"},
+            {id: "6", name: "Green2-Chutney",added: false, type: "Breakfast"},
+            {id: "7", name: "Poha jaisa dikhne wala kuch",added: false, type: "Breakfast"},
+            {id: "8", name: "Namkin sewaii",added: false, type: "Breakfast"},
+            {id: "9", name: "Tatti Dosa without masala",added: false, type: "Breakfast"},
+            {id: "10", name: "Tatti Dosa with masala",added: false, type: "Breakfast"},
+            {id: "11", name: "Bread without butter",added: false, type: "Breakfast"},
+            {id: "12", name: "Bread with butter", added: false, type: "Breakfast"},
+            {id: "13", name: "Rice normal",added: false, type: "Lunch"},
+            {id: "14", name: "Sambar",added: false, type: "Lunch"},
+            {id: "15", name: "unknown curry",added: false, type: "Lunch"},
+            {id: "16", name: "bread pakoda",added: false, type: "Snacks"},
+            {id: "17", name: "roti", added: false, type: "Dinner"},
+            {id: "18", name: "unknown dinner curry",added: false, type: "Dinner"},
+            {id: "19", name: "fried rice",added: false, type: "Dinner"},
+            {id: "20", name: "kanji",added: false, type: "Dinner"},
+            {id: "21", name: "vada", added: false, type: "Snacks"}
+
         ];
 
-        $scope.lunch = [
-            "Rice normal",
-            "Rice fat version",
-            "Curry( unknown )",
-            "Dahi",
-            "Pappad"
-        ];
+        $scope.isBreakfast = function(item){
+            if(item.type === "Breakfast"){
 
-        $scope.snacks = [
-            "Bread pakoda",
-            "Vadda",
-            "Cake",
-            "Mirchi ka bhajii"
-        ];
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
 
-        $scope.dinner =[
-            "Paneer",
-            "Chappati",
-            "White Rice",
-            "Another Rice",
-            "Regular tatti curry",
-            "Irregular tatti curry"
-        ];
+        $scope.isLunch = function(item){
+            if(item.type === "Lunch"){
+
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+
+        $scope.isSnacks = function(item){
+            if(item.type === "Snacks"){
+
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+
+        $scope.isDinner = function(item){
+            if(item.type === "Dinner"){
+
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+
+
 
 
         $scope.added=false;
         $scope.preview=[];
 
-        $scope.addItem = function(ev){
-            $mdDialog.show({
-                controller: newItemCtrl,
-                templateUrl: 'Admin/newItem/newItem.html',
-                targetEvent: ev,
-                clickOutsideToClose:true
-            });
-        };
+
         $scope.editItem = function (ev) {
             $scope.confirm = $mdDialog.prompt()
                 .title("Rename the item")
@@ -85,7 +106,14 @@ angular.module('myApp')
             });
         };
 
-
+        $scope.addItem = function(ev){
+            $mdDialog.show({
+                controller: newItemCtrl,
+                templateUrl: 'Admin/newItem/newItem.html',
+                targetEvent: ev,
+                clickOutsideToClose:true
+            });
+        };
 
         function newItemCtrl($scope, $mdDialog){
             $scope.itemType = [
@@ -102,36 +130,36 @@ angular.module('myApp')
         }
 
         $scope.addedToPreview = function(item){
-            console.log(item);
 
             if(item.added == true) {
                 for (var i = 0; i < $scope.preview.length; i++) {
-                    if (item.name === $scope.preview[i]) {
+                    if (item.id === $scope.preview[i].id) {
                         item.added = false;
                         $scope.preview.splice(i, 1);
-                        $scope.showRemovedToast(item.name);
+                        $scope.showRemovedToast(item);
                         break;
                     }
                 }
             }
             else{
-                $scope.preview.push(item.name);
+                $scope.preview.push(item);
                 item.added = true;
-                $scope.showAddedToast(item.name);
+                $scope.showAddedToast(item);
             }
+            /*sessionStorage.setItem("preview",JSON.stringify($scope.preview));*/
             console.log($scope.preview);
         };
 
 
 
 
-        $scope.showAddedToast = function (name) {
+        $scope.showAddedToast = function (item) {
             /*$scope.pinTo = $scope.getToastPosition();*/
             console.log($scope.added);
             if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('Added ' + name)
+                        .textContent('Added ' + item.name)
                         .position('top, right')
                         .hideDelay(1000))
                     .then(function () {
@@ -144,13 +172,13 @@ angular.module('myApp')
 
         };
 
-        $scope.showRemovedToast = function (name) {
+        $scope.showRemovedToast = function (item) {
             /*$scope.pinTo = $scope.getToastPosition();*/
             console.log($scope.added);
             if($scope.added==false){
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('Removed ' + name)
+                        .textContent('Removed ' + item.name)
                         .position('top, right')
                         .hideDelay(1000))
                     .then(function () {
@@ -162,6 +190,25 @@ angular.module('myApp')
             }
 
         };
+
+        /*$scope.previewItems = function(ev){
+            $mdDialog.show({
+                controller: previewItemsCtrl,
+                templateUrl: 'admin/Preview/preview.html',
+                targetEvent: ev,
+                clickOutsideToClose:true
+            });
+        };
+
+        function previewItemsCtrl($scope, $mdDialog){
+            $scope.preview = JSON.parse(sessionStorage.getItem("preview"));
+            console.log($scope.preview);
+
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+
+        }*/
 
     }]);
 
