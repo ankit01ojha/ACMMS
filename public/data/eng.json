@@ -1,0 +1,11 @@
+[
+  {
+    "name" : "EngCanteen",
+    "items": [
+      {"id": "B1", "name": "Idli", "type": "Breakfast", "rating": 0},
+      {"id": "B2","name": "sambar", "type": "Breakfast", "rating": 0},
+      {"id": "B3","name": "white chutney", "type": "Breakfast", "rating": 0},
+      {"id": "B4","name": "orange chutney", "type": "Breakfast", "rating": 0}
+    ]
+  }
+]

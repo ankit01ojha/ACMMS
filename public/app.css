@@ -24,6 +24,14 @@
   padding-right: 0.3em;
 }
 
+.loader-icon{
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  z-index: 1000;
+  height: 60px;
+  width: 60px;
+}
 
 .toolbardemoBasicUsage md-toolbar .md-button.md-icon-button .favorite-icon {
   fill: #DE3641; }
@@ -87,3 +95,33 @@
   height: 300px;
   margin-left: auto;
   margin-right: auto; }
+
+.rating {
+  color: #a9a9a9;
+  margin: 0;
+  padding: 0;
+}
+ul.rating {
+  display: inline-block;
+}
+.rating li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 1px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size:20px;
+}
+.rating .filled {
+  color: orangered;
+}
+.clear{
+  margin-top:20px;
+}
+
+.gridListdemoBasicUsage md-grid-list {
+  margin: 8px; }
+
+.gridListdemoBasicUsage .green {
+  background: #b9f6ca; }
