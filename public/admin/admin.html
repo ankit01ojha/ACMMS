@@ -1,3 +1,4 @@
+
 <div layout="column" layout-fill>
 
     <md-toolbar class="md-hue">
@@ -23,7 +24,7 @@
     <md-divider></md-divider>
     <md-content>
         <md-tabs md-center-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="Breakfast">
+            <md-tab label="Breakfast" md-on-select="showConfirm(0)">
                 <md-content class="md-padding">
 
                     <div  class='md-padding' layout="row" layout-wrap>
@@ -41,10 +42,10 @@
                             <md-divider></md-divider>
                             <md-card-actions>
 
-                                <md-button class="md-primary" ng-click="editItem($event)">
+                                <md-button class="md-primary" ng-click="editItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-edit-24px.svg"></md-icon>
                                 </md-button>
-                                <md-button class="md-accent" ng-click="deleteItem($event)">
+                                <md-button class="md-accent" ng-click="deleteItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-delete-24px.svg"></md-icon>
                                 </md-button>
                             </md-card-actions>
@@ -55,7 +56,7 @@
 
                 </md-content>
             </md-tab>
-            <md-tab label="Lunch">
+            <md-tab label="Lunch" md-on-select="showConfirm(0)">
                 <md-content class="md-padding">
 
                     <md-content class="md-padding">
@@ -75,10 +76,10 @@
                                 <md-divider></md-divider>
                                 <md-card-actions>
 
-                                    <md-button class="md-primary" ng-click="editItem($event)">
+                                    <md-button class="md-primary" ng-click="editItem(item)">
                                         <md-icon md-svg-src="Pictures/img/outline-edit-24px.svg"></md-icon>
                                     </md-button>
-                                    <md-button class="md-accent" ng-click="deleteItem($event)">
+                                    <md-button class="md-accent" ng-click="deleteItem(item)">
                                         <md-icon md-svg-src="Pictures/img/outline-delete-24px.svg"></md-icon>
                                     </md-button>
                                 </md-card-actions>
@@ -89,7 +90,7 @@
 
                     </md-content>
             </md-tab>
-            <md-tab label="Snacks">
+            <md-tab label="Snacks" md-on-select="showConfirm(0)">
                 <md-content class="md-padding">
 
                     <div  class='md-padding' layout="row" layout-wrap>
@@ -107,10 +108,10 @@
                             <md-divider></md-divider>
                             <md-card-actions>
 
-                                <md-button class="md-primary" ng-click="editItem($event)">
+                                <md-button class="md-primary" ng-click="editItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-edit-24px.svg"></md-icon>
                                 </md-button>
-                                <md-button class="md-accent" ng-click="deleteItem($event)">
+                                <md-button class="md-accent" ng-click="deleteItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-delete-24px.svg"></md-icon>
                                 </md-button>
                             </md-card-actions>
@@ -121,7 +122,7 @@
 
                 </md-content>
             </md-tab>
-            <md-tab label="Dinner">
+            <md-tab label="Dinner" md-on-select="showConfirm(0)">
                 <md-content class="md-padding">
 
                     <div  class='md-padding' layout="row" layout-wrap>
@@ -139,10 +140,10 @@
                             <md-divider></md-divider>
                             <md-card-actions>
 
-                                <md-button class="md-primary" ng-click="editItem($event)">
+                                <md-button class="md-primary" ng-click="editItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-edit-24px.svg"></md-icon>
                                 </md-button>
-                                <md-button class="md-accent" ng-click="deleteItem($event)">
+                                <md-button class="md-accent" ng-click="deleteItem(item)">
                                     <md-icon md-svg-src="Pictures/img/outline-delete-24px.svg"></md-icon>
                                 </md-button>
                             </md-card-actions>
@@ -153,7 +154,7 @@
 
                 </md-content>
             </md-tab>
-            <md-tab label="Preview">
+            <md-tab label="Preview" md-on-select="showConfirm(1)">
                 <md-content class="md-padding" layout-xs="column">
                     <div layout="row">
                         <div layout-sm="column">
@@ -234,7 +235,6 @@
                         md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
                         md-row-height-gt-md="1:1" md-row-height="2:2"
                         md-gutter="12px" md-gutter-gt-sm="8px" >
-
                     <md-grid-tile class="green"
                                   md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
                         <md-grid-tile-footer>
@@ -263,8 +263,11 @@
 
             </md-tab>
         </md-tabs>
-        <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="add" style="position: fixed ;" ng-click="addItem($event)">
+        <md-button ng-if="!confirm" class="md-fab md-primary md-fab-bottom-right" aria-label="add" style="position: fixed ;" ng-click="addItem($event)">
             <md-icon md-svg-src="Pictures/img/outline-add-24px.svg"></md-icon>
+        </md-button>
+        <md-button ng-if="confirm" class="md-fab md-fab-bottom-right" aria-label="add" style="position: fixed ;" ng-click="submitPreview()">
+            <md-icon><i class="material-icons" style="color:white;">check</i></md-icon>
         </md-button>
         <!--<div class="lock-size" layout="row" layout-align="end start">
             <md-fab-speed-dial md-open=false md-direction="left"
@@ -274,7 +277,6 @@
                         <md-icon md-svg-src="Pictures/img/baseline-menu-24px.svg"></md-icon>
                     </md-button>
                 </md-fab-trigger>
-
                 <md-fab-actions>
                     <md-button aria-label="Add" ng-click="addItem($event)" class="md-fab md-raised md-mini">
                         <md-icon md-svg-src="Pictures/img/outline-add-24px.svg" aria-label="Twitter"></md-icon>

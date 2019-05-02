@@ -24,11 +24,14 @@ passport.deserializeUser(authModule.deSerializer);
 
 
 //Public Routes
-app.post('/login',passport.authenticate('local'),function(req,res){
+app.post('/login',passport.authenticate('local'),function(req,res,next){
     res.status(200).json({
         user:req.user
     });
 });
+
+
+
 
 
 //Verification routes
@@ -54,6 +57,42 @@ app.get('/checkAdmin',[ensureAuthenticated,isAdmin],function(req,res,next){
 
 
 //Privileged Routes
+app.get('/getmenu/:carter_id?',function(req,res,next){
+    console.log("Reached..");
+    let db = new dbconnection(dbURL);
+    let result = db.getMenu(req.params.carter_id);
+    result.then(function(data){
+        res.status(200).json({
+            data:data
+        });
+    },function(err){
+        next(err);
+    });
+    
+    
+});
+
+app.get('/getmenuloggedin',[ensureAuthenticated,isOwner],function(req,res,next){
+    console.log("Reached here........");
+    let user = req.user;
+    let db  = new dbconnection(dbURL);
+    let result = db.getOwner(req.user.id);
+    result.then(function(data){
+        console.log(data);
+        let cater_id = data[0].carter_id;
+        let result = db.getMenu(cater_id);
+        result.then(function(data){
+            console.log(data);
+            res.status(200).json({
+                data:data
+            });
+        },function(err){
+            next(err);
+        });
+    },function(err){
+        next(err);
+    });
+});
 
 app.get('/logout',[ensureAuthenticated],function(req,res,next){
     req.logout();
@@ -88,14 +127,150 @@ app.post('/createitem',[ensureAuthenticated,isOwner,findMissing(["name","type"])
     result.then(function(data){
         req.body.carter_id = data[0].carter_id;
         req.body.ID = req.body.carter_id + "_" + req.body.name.toLowerCase().split(' ').join("_");
-        let result2 = db.createItem(req.body);
-        result2.then(function(){
-            return res.status(200).json({
-                message:"Item created!"
+        let result3  = db.getItem({item_name:req.body.name,carter_id:req.body.carter_id});
+        result3.then(function(data){
+            if(data.length > 0){
+                return res.status(400).json({
+                    "message":req.body.name + " already exists"
+                });
+            }
+            else{
+                let result2 = db.createItem(req.body);
+                result2.then(function(){
+                    return res.status(200).json({
+                        message:"Item created!"
+                    });
+                },function(err){
+                    next(err);
+                });
+            }
+        },function(err){
+            next(err);
+        });
+        
+    },function(err){
+        next(err);
+    });
+});
+
+app.put('/edititem/:item_id',[ensureAuthenticated,isOwner,findMissing(["name"])],function(req,res,next){
+    let user = req.user;
+    let db  = new dbconnection(dbURL);
+    let result = db.getOwner(req.user.id);
+    result.then(function(data){
+        req.body.carter_id = data[0].carter_id;
+        let result3  = db.getItem({item_id:req.params.item_id});
+        result3.then(function(data){
+            if(data.length > 0){
+                if(data[0].carter_id == req.body.carter_id){
+                    let result4 = db.editItem(req.params.item_id,req.body.name);
+                    result4.then(function(data){
+                        res.status(200).json({
+                            "message":"Item edited successfuly"
+                        });
+                    },function(err){
+                        next(err);
+                    });
+                }
+                else{
+                    res.status(403).json({
+                        "message": "Item does not belong to your cater"
+                    });
+                }
+            }
+            else{
+                res.status(400).json({
+                    "message":req.params.item_id + "does not exist"
+                });
+            }
+        },function(err){
+            next(err);
+        });
+        
+    },function(err){
+        next(err);
+    });
+});
+
+app.delete('/deleteitem/:item_id',[ensureAuthenticated,isOwner],function(req,res,next){
+    let user = req.user;
+    let db  = new dbconnection(dbURL);
+    let result = db.getOwner(req.user.id);
+    result.then(function(data){
+        req.body.carter_id = data[0].carter_id;
+        let result3  = db.getItem({item_id:req.params.item_id});
+        console.log(req.params.item_id);
+        result3.then(function(data){
+            if(data.length > 0){
+                if(data[0].carter_id == req.body.carter_id){
+                    let result4 = db.deleteItem(req.params.item_id);
+                    result4.then(function(data){
+                        res.status(200).json({
+                            "message":"Item deleted successfuly"
+                        });
+                    },function(err){
+                        next(err);
+                    });
+                }
+                else{
+                    res.status(403).json({
+                        "message": "Item does not belong to your cater"
+                    });
+                }
+            }
+            else{
+                res.status(400).json({
+                    "message":req.params.item_id + "does not exist"
+                });
+            }
+        },function(err){
+            next(err);
+        });
+        
+    },function(err){
+        next(err);
+    });
+});
+
+app.post('/createmenu',[ensureAuthenticated,isOwner,findMissing(["items"])],function(req,res,next){
+    let user = req.user;
+    let db  = new dbconnection(dbURL);
+    let result = db.getOwner(req.user.id);
+    let cb = 0;
+    result.then(function(data){
+        req.body.carter_id = data[0].carter_id;
+        let result2 = db.getMenu(req.body.carter_id);
+        result2.then(function(data2){
+            for(var j=0;j<data2.length;j++){
+                let flag = 0
+                for(var i=0;i<req.body.items.length;i++){
+                    if(req.body.items[i].id == data2[j].id){
+                        flag = 1;
+                    }
+                }
+                if(flag == 0){
+                    let result3 = db.deleteItemMenu(data2[j].menu_id);
+                    result3.then(function(d){
+                        
+                        
+                    },function(err){
+                        next(err);
+                    });
+                }
+            }
+
+            let final = db.createMenu(req.body);
+            final.then(function(done){
+                res.status(200).json({
+                    message: "Created Menu!"
+                });
+            },function(err){
+                next(err);
             });
         },function(err){
             next(err);
-        })
+        });
+        
     },function(err){
         next(err);
     });
@@ -133,8 +308,6 @@ app.post('/ownerRegistration',[ensureAuthenticated,isAdmin,findMissing(["usernam
         
     });
 });
-
-
 
 
 //Test route for user registration
@@ -214,6 +387,8 @@ Middleware functions
 function findMissing(fields){
     return function(req,res,next){
         var missing = [];
+
+        
         fields.forEach(function(field){
             if(!(field in req.body)){
                 missing.push(field);
@@ -221,7 +396,7 @@ function findMissing(fields){
         });
 
         if(missing.length > 0){
-            res.status(400).json({
+            return res.status(400).json({
                 'message': missing.toString() + ' fields are missing'
             });
         }

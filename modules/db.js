@@ -151,13 +151,119 @@ Database.prototype.createItem = async function(options){
 
 }
 
+Database.prototype.deleteItem = async function(id){
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        var query = `DELETE from items where id = '${id}'`;
+        var result = await self.conn.query(query);
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result;
+    }
+    catch(err){
+        await self.conn.query("ROLLBACK");
+        throw new Error(err);
+    }
 
-/* 
 
-Todo
+}
 
-4. Create Menu
+Database.prototype.editItem = async function(id,name){
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        var query = `UPDATE items SET name = '${name}' WHERE id = '${id}'`;
+        var result = await self.conn.query(query);
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result;
+    }
+    catch(err){
+        await self.conn.query("ROLLBACK");
+        throw new Error(err);
+    }
 
 
-*/
+}
+
+Database.prototype.getItem = async function(options){
+    
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        if(options.item_id){
+            var query = `SELECT * from items where id = '${options.item_id}'`;
+        }
+        else{
+            var query = `SELECT * from items where carter_id = '${options.carter_id}' AND name='${options.item_name}'`;      
+        }
+        var result = await self.conn.query(query);
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result.rows;
+    }catch(err){
+        await self.conn.query("ROLLBACK");
+        throw Error (err)
+    }
+}
+
+Database.prototype.createMenu = async function(options){
+    
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        
+        for(var i=0;i<options.items.length;i++){
+            let item = options.items[i];
+            var query = `INSERT INTO menu (date,item_id,type) VALUES (DATE(NOW()),'${item.id}','${item.type}');`
+            var result = await self.conn.query(query);
+        };
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result.rows;
+    }catch(err){
+        await self.conn.query("ROLLBACK");
+        throw Error (err)
+    }
+}
+
+Database.prototype.getMenu = async function(carter_id){
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        var query = `SELECT menu_id,id,name,price,menu.type from items inner join menu on items.id = menu.item_id where items.carter_id = '${carter_id}' AND menu.date = DATE(NOW());`;
+        var result = await self.conn.query(query);
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result.rows;
+    }catch(err){
+        await self.conn.query("ROLLBACK");
+        throw Error (err)
+    }
+}
+
+Database.prototype.deleteItemMenu = async function(id){
+    var self = this;
+    try{
+        self.connect();
+        await self.conn.query("BEGIN");
+        var query = `DELETE from menu where menu_id = '${id}'`;
+        var result = await self.conn.query(query);
+        await self.conn.query("COMMIT");
+        self.conn.end();
+        return result.rows;
+    }catch(err){
+        await self.conn.query("ROLLBACK");
+        throw Error (err)
+    }
+}
+
+
+
 module.exports = Database;

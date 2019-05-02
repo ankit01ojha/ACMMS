@@ -114,5 +114,47 @@ app.service('resourceFactory',['$rootScope','$http',function(scope,$http){
             data:data
         });
     }
+
+    this.deleteItem = function(data){
+        scope.blockUI = true;
+        return $http({
+            method: 'delete',
+            url: '/api/deleteitem/'+data.id
+        });
+    }
+
+    this.editItem = function(data){
+        scope.blockUI = true;
+        return $http({
+            method:'put',
+            url:'/api/edititem/'+data.id,
+            data:data
+        });
+    }
+
+    this.getMenu = function(data){
+        scope.blockUI = true;
+        return $http({
+            method:"get",
+            url:"/api/getmenu/"+data.id
+        });
+    }
+
+    this.createMenu = function(data){
+        scope.blockUI = true;
+        return $http({
+            method:"post",
+            url:"/api/createmenu",
+            data:data
+        });
+    }
+
+    this.getMenuLoggedIn = function(){
+        scope.blockUI = true;
+        return $http({
+            method:"get",
+            url:"/api/getmenuloggedin/"
+        });
+    }
     
 }]);

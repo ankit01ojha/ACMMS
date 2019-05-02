@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('appCtrl',['$rootScope','$scope','$mdToast','authService','$location',function($rootScope,$scope,$mdToast,authService,$location){
+    .controller('appCtrl',['$rootScope','$scope','$mdToast','authService','$location','$log',function($rootScope,$scope,$mdToast,authService,$location,$log){
         authService.isLoggedIn();
         $scope.logout = function(){
             authService.logOut();

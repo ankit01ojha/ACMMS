@@ -15,7 +15,7 @@
                     <md-input-container class="md-icon-float md-block">
                         <label>Item Name</label>
                         <md-icon style="color: dodgerblue" md-svg-src="Pictures/img/outline-local_dining-24px.svg" class="name"></md-icon>
-                        <input ng-model="newItem" type="text">
+                        <input ng-model="name" type="text">
                     </md-input-container>
 
                     <md-input-container md-no-float class="md-block">
@@ -30,7 +30,7 @@
             </div>
         </md-dialogue-content>
         <md-dialog-actions layout="row">
-            <md-button class="md-primary"ng-click="">AddItem</md-button>
+            <md-button class="md-primary" ng-click="createItem()">AddItem</md-button>
             <md-button ng-click="cancel()">Cancel</md-button>
 
         </md-dialog-actions>
