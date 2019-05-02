@@ -4,11 +4,14 @@
   "description": "Amrita Canteen Mess Management System",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node ./node_modules/frontend-dependencies/index.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
+    "angular-nvd3": "^1.0.9",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
@@ -42,9 +45,5 @@
         "version": "0.0.1"
       }
     }
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/frontend-dependencies/index.js",
-    "start":"node index.js"
   }
 }

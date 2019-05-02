@@ -33,6 +33,10 @@ angular.module('myApp')
                 templateUrl: 'EngCanteen/engCanteen.html',
                 controller: 'engCanteenCtrl'
             })
+            .when('/analysis', {
+                templateUrl: 'admin/analysis/analysis.html',
+                controller: 'analysisCtrl'
+            })
             .otherwise({
                 redirectTo:'/'
             });

@@ -6,6 +6,7 @@ app.service('authService',['$rootScope','$http','$q','$location',function(scope,
         $http.post('/api/login',{username:username,password:password}).then(function(result){
             scope.blockUI = false;
             scope.$broadcast("UserAuthenticationSuccess",result.data);
+            scope.loggedIn = true;
         
         },function(result){
             scope.blockUI = false;
@@ -15,6 +16,8 @@ app.service('authService',['$rootScope','$http','$q','$location',function(scope,
             else{
                 scope.$broadcast("UserAuthenticationFailure",result.data,result.status);
             }
+
+            scope.loggedIn = false;
             
         });
     }

@@ -18,7 +18,7 @@
         </div>
     </md-toolbar>
     <md-divider></md-divider>
-    <md-content>
+    <!--<md-content>
         <md-tabs md-center-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Breakfast">
                 <md-content class="md-padding">
@@ -119,7 +119,7 @@
         </md-tabs>
         <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="add" style="position: fixed ;" ng-click="addItem($event)">
             <md-icon md-svg-src="Pictures/img/outline-add-24px.svg"></md-icon>
-        </md-button>
+        </md-button>-->
         <!--<div class="lock-size" layout="row" layout-align="end start">
             <md-fab-speed-dial md-open=false md-direction="left"
                                ng-class='md-fling'>
@@ -140,6 +140,121 @@
             </md-fab-speed-dial>
         </div>-->
     </md-content>
+    <md-content class="md-padding" layout-xs="column">
+        <div layout="row">
+            <div layout-sm="column">
+                <md-card  style="width: 350px; padding-left: 20px">
+                    <md-card-title-text style="padding-left: 20px;">
+                        <h2 style="padding-left: 20px; color: orangered" class="md-headline">Breakfast</h2>
+                    </md-card-title-text>
+                </md-card>
+                <md-card  style="width: 350px; padding-left: 20px">
+                    <div ng-repeat="item in food" ng-show="isBreakfast(item)" >
+                        <md-card-title-text style="padding-left: 20px;">
+                            <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
 
+                        </md-card-title-text>
+
+                        <md-card-actions layout="rows">
+                            <div class=col-md-12>
+                                <div ng-repeat="rating in ratings" ng-if="loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="getSelectedRating(rating)"></div>
+                                </div>
+                                <div ng-repeat="rating in ratings" ng-if="!loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="alertUser()"></div>
+                                </div>
+                            </div>
+                        </md-card-actions>
+                        <md-divider></md-divider>
+                    </div>
+
+                </md-card>
+            </div>
+            <div layout-sm="column">
+                <md-card  style="width: 350px; padding-left: 20px">
+                    <md-card-title-text style="padding-left: 20px;">
+                        <h2 style="padding-left: 20px; color: orangered" class="md-headline">Lunch</h2>
+                    </md-card-title-text>
+                </md-card>
+                <md-card  style="width:350px; padding-left: 20px">
+                    <div ng-repeat="item in food" ng-show="isLunch(item)">
+                        <md-card-title-text style="padding-left: 20px;">
+
+                            <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
+
+                        </md-card-title-text>
+                        <md-card-actions layout="rows">
+                            <div class=col-md-12>
+                                <div ng-repeat="rating in ratings" ng-if="loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="getSelectedRating(rating)"></div>
+                                </div>
+                                <div ng-repeat="rating in ratings" ng-if="!loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="alertUser()"></div>
+                                </div>
+                            </div>
+                        </md-card-actions>
+                        <md-divider></md-divider>
+                    </div>
+
+                </md-card>
+            </div>
+
+            <div layout-sm="column">
+                <md-card  style="width: 350px; padding-left: 20px">
+                    <md-card-title-text style="padding-left: 20px;">
+                        <h2 style="padding-left: 20px; color: orangered" class="md-headline">Snacks</h2>
+                    </md-card-title-text>
+                </md-card>
+                <md-card style="width: 350px; padding-left: 20px">
+                    <div ng-repeat="item in food" ng-show="isSnacks(item)">
+                        <md-card-title-text style="padding-left: 20px;">
+                            <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
+                        </md-card-title-text>
+                        <md-card-actions layout="rows">
+                            <div class=col-md-12>
+                                <div ng-repeat="rating in ratings" ng-if="loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="getSelectedRating(rating)"></div>
+                                </div>
+                                <div ng-repeat="rating in ratings" ng-if="!loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="alertUser()"></div>
+                                </div>
+                            </div>
+                        </md-card-actions>
+                        <md-divider></md-divider>
+                    </div>
+
+                </md-card>
+            </div>
+
+            <div layout-sm="column">
+                <md-card  style="width: 350px; padding-left: 20px">
+                    <md-card-title-text style="padding-left: 20px;">
+                        <h2 style="padding-left: 20px; color: orangered" class="md-headline">Dinner</h2>
+                    </md-card-title-text>
+                </md-card>
+                <md-card style="width: 350px; padding-left: 20px">
+                    <div ng-repeat="item in food" ng-show="isDinner(item)">
+                        <md-card-title-text style="padding-left: 20px;">
+                            <h2 style="padding-left: 20px" class="md-headline">{{item.name}}</h2>
+
+                        </md-card-title-text>
+
+                        <md-card-actions layout="rows">
+                            <div class=col-md-12>
+                                <div ng-repeat="rating in ratings" ng-if="loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="getSelectedRating(rating)"></div>
+                                </div>
+                                <div ng-repeat="rating in ratings" ng-if="!loggedIn">
+                                    <div star-rating rating-value="rating" max="5" on-rating-selected="alertUser()"></div>
+                                </div>
+                            </div>
+                        </md-card-actions>
+                        <md-divider></md-divider>
+                    </div>
+
+                </md-card>
+            </div>
+        </div>
+    </md-content>
 
 </div>

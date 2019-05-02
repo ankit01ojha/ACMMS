@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory',  function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory) {
+    .controller('adminCtrl', ['$rootScope', '$scope', '$q', '$mdDialog', '$mdToast', '$log', 'resourceFactory','$location',  function ($rootScope, $scope, $q, $mdDialog, $mdToast, $log, resourceFactory, $location) {
 
         $scope.food=[
             {id: "1", name: "Idli", added: false, type: "Breakfast"},
@@ -209,6 +209,10 @@ angular.module('myApp')
             };
 
         }*/
+
+        $scope.analysis = function(){
+            $location.path('/analysis');
+        };
 
     }]);
 
