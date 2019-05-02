@@ -4,6 +4,7 @@
     angular.module('myApp', [
         'ngMaterial',
         'ngRoute',
-        'ngAnimate'
+        'ngAnimate',
+        'nvd3'
     ]);
 })();

@@ -1,32 +1,45 @@
+<md-toolbar class="md-hue">
+    <div class="md-toolbar-tools">
+        <img style="height: 50px" ng-src="Pictures/amrita_logo.png">
+        <h2 style="padding-left: 60px" flex md-truncate>Amrita Canteen and Mess Management System(ACMMS)</h2>
+        <md-button class="md-raised md-warm" ng-click="showLogin($event)" ng-if="!loggedIn">Login</md-button>
+        
+        <md-menu ng-if="loggedIn">
+            <md-button aria-label="Open demo menu"  ng-click="$mdMenu.open($event)">
+                    <md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}
+            </md-button>
+            <md-menu-content width="4" >
+                    <md-menu-item ng-click="logout()">
+                            <span><i class="material-icons">exit_to_app</i>Logout</span>
+                    </md-menu-item>
+                    <md-menu-item ng-click="logout()">
+                        <span><i class="material-icons">graphic_eq</i>Rating Analysis</span>
+                    </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
 
-    <md-toolbar class="md-hue">
-        <div class="md-toolbar-tools">
-            <img style="height: 50px" ng-src="Pictures/amrita_logo.png">
-            <h2 style="padding-left: 60px"flex md-truncate>Amrita Canteen and Mess Management System(ACMMS)</h2>
-            <md-button class="md-raised md-warm" ng-click="showLogin($event)" ng-if="!loggedIn">Login</md-button>
-            <span ng-if="loggedIn"><md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}</span>
-        </div>
+</md-toolbar>
 
-    </md-toolbar>
+<md-container style="padding-top: 30px" class="md-padding" layout-xs="column" layout="row">
 
-    <md-container style="padding-top: 30px" class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" ng-click="show_BioCanteen()" layout="column">
+        <md-whiteframe class="md-whiteframe-23dp">
+            <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                <img ng-src="Pictures/cc.jpg" class="md-card-image" alt="Washed Out" style="height: 370px; cursor: pointer">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Amrita Biotech Canteen</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+        </md-whiteframe>
+    </div>
 
-        <div flex-xs flex-gt-xs="50" ng-click="bCanteen()" layout="column">
-            <md-whiteframe  class="md-whiteframe-23dp">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <img ng-src="Pictures/Child-messy-eating-300x212.jpg" class="md-card-image" alt="Washed Out">
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Amrita Biotech Canteen</span>
-                        </md-card-title-text>
-                    </md-card-title>
-                </md-card>
-            </md-whiteframe>
-        </div>
-        <div flex-xs flex-gt-xs="50" style="padding: 10px;" layout="column">
+        <div flex-xs flex-gt-xs="50" style="padding: 10px;" layout="column" ng-click="show_mess()">
             <md-whiteframe class="md-whiteframe-20dp">
                 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <img ng-src="Pictures/mess.jpg" class="md-card-image" alt="Washed Out">
+                    <img ng-src="Pictures/mess.jpg" class="md-card-image" alt="Washed Out" style="cursor: pointer">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">Amrita Mess</span>
@@ -36,10 +49,10 @@
                 </md-card>
             </md-whiteframe>
         </div>
-        <div flex-xs flex-gt-xs="50"  layout="column">
+        <div flex-xs flex-gt-xs="50"  layout="column" ng-click="show_EngCanteen()">
             <md-whiteframe  class="md-whiteframe-23dp">
                 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <img ng-src="Pictures/Child-messy-eating-300x212.jpg" class="md-card-image" alt="Washed Out">
+                    <img ng-src="Pictures/cc.jpg" class="md-card-image" alt="Washed Out" style="height: 370px; cursor: pointer">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">Amrita Engineering Canteen</span>
@@ -51,3 +64,4 @@
             </md-whiteframe>
         </div>
     </md-container>
+
