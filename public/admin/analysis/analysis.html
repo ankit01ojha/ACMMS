@@ -1,0 +1,40 @@
+<div layout="column" layout-fill>
+
+    <md-toolbar class="md-hue">
+        <div class="md-toolbar-tools">
+            <img style="height: 50px" ng-src="Pictures/amrita_logo.png">
+            <h2 style="padding-left: 60px"flex md-truncate>Amrita Canteen and Mess Management System(ACMMS)</h2>
+            <md-menu ng-if="loggedIn">
+                <md-button aria-label="Open demo menu"  ng-click="$mdMenu.open($event)">
+                    <md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}
+                </md-button>
+                <md-menu-content width="4" >
+                    <md-menu-item ng-click="logout()" style="cursor:pointer">
+                        <span><i class="material-icons">exit_to_app</i>Logout</span>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content>
+        <md-card flex-gt-md="40">
+            <md-card-content>
+                <div  style="padding-left: 50px">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Duration</label>
+                        <md-select ng-model="time" ng-change="time" required>
+                            <md-option ng-repeat="time in duration" ng-value="time">{{ time }}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <nvd3 options="options" data="data"></nvd3>
+    </md-content>
+
+
+
+</div>

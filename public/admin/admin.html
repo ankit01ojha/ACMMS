@@ -5,9 +5,7 @@
         <div class="md-toolbar-tools">
             <img style="height: 50px" ng-src="Pictures/amrita_logo.png">
             <h2 style="padding-left: 60px"flex md-truncate>Amrita Canteen and Mess Management System(ACMMS)</h2>
-            <md-button>
-                <md-button class="md-raised md-warn" ng-click="previewItems()">Preview</md-button>
-            </md-button>
+            
             <md-menu ng-if="loggedIn">
                     <md-button aria-label="Open demo menu"  ng-click="$mdMenu.open($event)">
                             <md-icon md-svg-src="Pictures/img/baseline-person-24px.svg" class="name"></md-icon> {{user.name}}

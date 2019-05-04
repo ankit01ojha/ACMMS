@@ -2,36 +2,92 @@
     'use strict';
 
     angular.module('myApp')
-        .controller('engCanteenCtrl', function ($scope, $http) {
+        .controller('engCanteenCtrl',['$scope','$http','$rootScope','resourceFactory','$q', function ($scope, $http, $rootScope,resourceFactory,$q) {
             $scope.contents = null;
             $scope.nos = [1,2,3,4,5];
 
             //service to get the daily menu data from the API.
-            $http.get('data/eng.json')
-                .then(function(data){
-                    $scope.contents = data;
-                    console.log(data);
-                });
-
-            $scope.rating = []
-
-            $scope.ratings = [ {
-                current: 1,
-                max: 5
-            }];
-
-            $scope.getSelectedRating = function (rating) {
-                console.log(rating);
+            let promises = {
+                menu: resourceFactory.getMenu({id:"ASE_ME"})
             }
+     
+            $q.all(promises).then(function(data){
+                $rootScope.blockUI = false;
+                
+                
+                $scope.food = data.menu.data.data;
+                $scope.ratings = [ {
+                    current: $scope.current,
+                    max: 5
+                }];
+
+                $scope.current = [];
+                for(var i=0; i<$scope.food.length;i++){
+                    $scope.current[i] = $scope.food[i].rating;
+                };
+                console.log($scope.current);
 
 
-            $scope.sendRate = function(){
-                alert("Thanks for your rates!\n\nFirst Rate: " + $scope.ratings[0].current+"/"+$scope.ratings[0].max
-                    +"\n"+"Second rate: "+ $scope.ratings[1].current+"/"+$scope.ratings[0].max)
-            }
-        })
+                $scope.getSelectedRating = function (rating) {
+                    console.log(rating);
+                }
 
-    .directive('starRating', function () {
+                console.log($scope.food)
+                
+            });    
+                
+
+            /*$scope.max_rating = 5;
+            $scope.current_rating = [];
+            for(var i=0;i<$scope.food.length;i++){
+                $scope.current_rating[i] = $scope.food[i].rating;
+            }*/
+
+            $scope.isBreakfast = function(item){
+                if(item.type === "breakfast"){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            };
+
+            $scope.isLunch = function(item){
+                if(item.type === "lunch"){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            };
+
+            $scope.isSnacks = function(item){
+                if(item.type === "snacks"){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            };
+
+            $scope.isDinner = function(item){
+                if(item.type === "dinner"){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            };
+            console.log($rootScope.loggedIn == undefined);
+
+
+
+        }])
+    .directive('starRating', function ($rootScope) {
         return {
             restrict: 'A',
             template: '<ul class="rating">' +
@@ -56,10 +112,16 @@
                 };
 
                 scope.toggle = function (index) {
-                    scope.ratingValue = index + 1;
-                    scope.onRatingSelected({
-                        rating: index + 1
-                    });
+                    if($rootScope.loggedIn == true){
+                        scope.ratingValue = index + 1;
+                        scope.onRatingSelected({
+                            rating: index + 1
+                        });
+                    }
+                    else{
+                        alert("log in first !!!")
+                    }
+
                 };
 
                 scope.$watch('ratingValue', function (oldVal, newVal) {
@@ -69,6 +131,7 @@
                 });
             }
         }
-    });
-})();
+    })
 
+
+})();
